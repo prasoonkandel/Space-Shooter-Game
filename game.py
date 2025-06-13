@@ -1,3 +1,5 @@
+# run this file to play game
+
 import pygame
 from Objects.spaceship import Spaceship
 from Objects.bullet import Bullet
