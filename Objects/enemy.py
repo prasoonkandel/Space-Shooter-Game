@@ -18,6 +18,7 @@ class Enemy(Sprite):
         self.rect.y = y
         self.width = self.image.get_width()
         self.height = self.image.get_height()
+        self.mask = pygame.mask.from_surface(self.image)
 
     def get_speed(self):
         return self.speed

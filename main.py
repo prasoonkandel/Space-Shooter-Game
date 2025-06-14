@@ -1,6 +1,7 @@
 # run this file to play game
 
 import pygame
+import time
 from Objects.spaceship import Spaceship
 from Objects.bullet import Bullet
 from Objects.enemy import Enemy, create_new_enemy
@@ -16,13 +17,14 @@ SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Shooter")
 # loading sounds
 fire_sound = pygame.mixer.Sound("assets/Sounds/fire.mp3")
-pygame.mixer.music.load("assets/Sounds/background.wav")
+bg_music = pygame.mixer.music.load("assets/Sounds/background.wav")
+game_over_sound = pygame.mixer.Sound("assets/Sounds/game_over.mp3")
 pygame.mixer.music.play(-1)
 # loding images
-bullet_image = pygame.image.load("assets/Images/bullet.png")
-space_ship_image = pygame.image.load("assets/Images/ship.png")
+bullet_image = pygame.image.load("assets/Images/bullet.png").convert_alpha()
+space_ship_image = pygame.image.load("assets/Images/ship.png").convert_alpha()
 stars_image = pygame.image.load("assets/Images/stars.png")
-enemy_img = pygame.image.load("assets/Images/enemy.png")
+enemy_img = pygame.image.load("assets/Images/enemy.png").convert_alpha()
 
 space_ship = Spaceship(space_ship_image, WIDTH//2, HEIGHT-100, 0.2)
 
@@ -58,16 +60,22 @@ while running:
     if keys[pygame.K_SPACE] and current_time - last_fired >= fire_delay:
         space_ship.fire(bullet_image, fire_sound)
         last_fired = current_time
-    if pygame.time.get_ticks() - last_enemy_spawned >= 250:
+    if pygame.time.get_ticks() - last_enemy_spawned >= 500:
         create_new_enemy(enemy_img, SCREEN_WIDTH=WIDTH)
-
         last_enemy_spawned = pygame.time.get_ticks()
+    # tracking collisions
+    for enemy in Enemy.enemy_list:
+        offset = (enemy.rect.x - space_ship.rect.x,
+                  enemy.rect.y - space_ship.rect.y)
+        if space_ship.mask.overlap(enemy.mask, offset):
+            pygame.mixer.music.stop()
+            game_over_sound.play()
+
+            running = False
+
+    # showing images
     Enemy.show(SCREEN)
     Bullet.show_bullets(SCREEN)
-    space_ship.show(SCREEN)
-
-    pygame.display.flip()
-
     space_ship.show(SCREEN)
     pygame.display.flip()
 pygame.quit()

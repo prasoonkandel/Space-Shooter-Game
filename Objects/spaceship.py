@@ -18,6 +18,7 @@ class Spaceship(Sprite):
         self.rect.y = y
         self.width = self.image.get_width()
         self.height = self.image.get_height()
+        self.mask = pygame.mask.from_surface(self.image)
 
     def show(self, screen):
         screen.blit(self.image, (self.rect.x-self.width/2, self.rect.y))

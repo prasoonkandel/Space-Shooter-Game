@@ -16,6 +16,7 @@ class Bullet(Sprite):
 
         self.width = self.image.get_width()
         self.height = self.image.get_height()
+        self.mask = pygame.mask.from_surface(self.image)
 
     def create_new_bullet(bullet_img, x, y):
         new_bullet = Bullet(bullet_img, x, y, 0.1)
