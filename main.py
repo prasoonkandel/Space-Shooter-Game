@@ -26,9 +26,13 @@ pygame.mixer.music.play(-1)
 # loding images
 bullet_image = pygame.image.load("assets/Images/bullet.png").convert_alpha()
 space_ship_image = pygame.image.load("assets/Images/ship.png").convert_alpha()
-stars_image = pygame.image.load("assets/Images/stars.png")
+stars_image = pygame.image.load("assets/Images/stars.png").convert()
 enemy_img = pygame.image.load("assets/Images/enemy.png").convert_alpha()
 reload_img = pygame.image.load("assets/Images/reload.png").convert_alpha()
+background_img = pygame.image = pygame.transform.scale(
+    stars_image, (int(stars_image.get_width() * 0.2),
+                  int(stars_image.get_height() * 0.2))
+)
 
 space_ship = Spaceship(space_ship_image, WIDTH//2, HEIGHT-100, 0.2)
 
@@ -40,7 +44,7 @@ running = True
 while running:
     clock.tick(60)
     pygame.display.set_caption(f"Space Shooter - FPS: {clock.get_fps():.2f}")
-    SCREEN.fill((0, 0, 0))
+    SCREEN.blit(stars_image, (0, 0), 100, 100)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
