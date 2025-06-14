@@ -46,7 +46,7 @@ while running:
     clock.tick(60)
     pygame.display.set_caption(f"Space Shooter - FPS: {clock.get_fps():.2f}")
     bullet_count_text = f"Bullets: {Bullet.magaze}"
-    score_text = f"score: {score}"
+    score_text = f"Score: {score}"
     SCREEN.blit(background_img, (0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -90,12 +90,16 @@ while running:
             space_ship.destroy()
             bullet_count_text = ""
             score_text = ""
-            score_text2 = f"score: {score}"
+            score_text2 = f"Score: {score}"
+            score_surface2 = bullet_count_font.render(
+                score_text2, True, (255, 255, 0))
             SCREEN.fill((0, 0, 0))
             font = pygame.font.SysFont("Montserrat", 64)
             text = font.render("GAME OVER", True, (255, 0, 0))
             SCREEN.blit(
                 text, (WIDTH // 2 - text.get_width() // 2, HEIGHT // 2))
+            SCREEN.blit(
+                score_surface2, (WIDTH // 2 - text.get_width() // 2, (HEIGHT // 2)+70))
             pygame.display.flip()
 
             game_over_sound.play()
