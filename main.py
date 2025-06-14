@@ -40,11 +40,13 @@ fire_delay = 100
 last_fired = 0
 last_enemy_spawned = 0
 last_reload_spawned = 0
+score = 0
 running = True
 while running:
     clock.tick(60)
     pygame.display.set_caption(f"Space Shooter - FPS: {clock.get_fps():.2f}")
     bullet_count_text = f"Bullets: {Bullet.magaze}"
+    score_text = f"score: {score}"
     SCREEN.blit(background_img, (0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -85,8 +87,10 @@ while running:
             Enemy.enemy_list.clear()
             Bullet.bullet_list.clear()
             Reload.reload_list.clear()
+            space_ship.destroy()
             bullet_count_text = ""
-
+            score_text = ""
+            score_text2 = f"score: {score}"
             SCREEN.fill((0, 0, 0))
             font = pygame.font.SysFont("Montserrat", 64)
             text = font.render("GAME OVER", True, (255, 0, 0))
@@ -114,6 +118,7 @@ while running:
                 Bullet.destroy(bullet)
                 Enemy.destroy(enemy)
                 explosion_sound.play()
+                score += 36
                 break
     for reload in Reload.reload_list[:]:
         offset = (reload.rect.x - space_ship.rect.x,
@@ -133,5 +138,9 @@ while running:
     text_surface = bullet_count_font.render(
         bullet_count_text, True, (255, 255, 255))
     SCREEN.blit(text_surface, (10, 10))
+    score_surface = bullet_count_font.render(score_text, True, (255, 255, 0))
+    SCREEN.blit(score_surface, (WIDTH // 2 -
+                score_surface.get_width() // 2, 10))
+
     pygame.display.flip()
 pygame.quit()
