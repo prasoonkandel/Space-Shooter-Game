@@ -57,5 +57,6 @@ class Spaceship(Sprite):
         create_new_bullet(bullet_img, center_x, self.rect.y)
 
     def destroy(self):
+        self.image = pygame.Surface((0, 0))  # Gayab hogaya
 
-        pass
+        self.mask = pygame.mask.Mask((0, 0))

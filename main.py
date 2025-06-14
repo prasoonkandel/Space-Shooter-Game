@@ -44,7 +44,8 @@ running = True
 while running:
     clock.tick(60)
     pygame.display.set_caption(f"Space Shooter - FPS: {clock.get_fps():.2f}")
-    SCREEN.blit(stars_image, (0, 0), 100, 100)
+    bullet_count_text = f"Bullets: {Bullet.magaze}"
+    SCREEN.blit(background_img, (0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -81,14 +82,30 @@ while running:
                   enemy.rect.y - space_ship.rect.y)
         if space_ship.mask.overlap(enemy.mask, offset):
             pygame.mixer.music.stop()
+            Enemy.enemy_list.clear()
+            Bullet.bullet_list.clear()
+            Reload.reload_list.clear()
+            bullet_count_text = ""
+
             SCREEN.fill((0, 0, 0))
             font = pygame.font.SysFont("Montserrat", 64)
             text = font.render("GAME OVER", True, (255, 0, 0))
             SCREEN.blit(
                 text, (WIDTH // 2 - text.get_width() // 2, HEIGHT // 2))
+            pygame.display.flip()
 
             game_over_sound.play()
+
+            start_time = pygame.time.get_ticks()
+            while pygame.time.get_ticks() - start_time < 4500:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        exit()
+                clock.tick(60)
             running = False
+            break
+
     for bullet in Bullet.bullet_list[:]:
         for enemy in Enemy.enemy_list[:]:
             offset = (bullet.rect.x - enemy.rect.x,
@@ -113,7 +130,6 @@ while running:
     Enemy.show(SCREEN)
     Bullet.show_bullets(SCREEN)
     space_ship.show(SCREEN)
-    bullet_count_text = f"Bullets: {Bullet.magaze}"
     text_surface = bullet_count_font.render(
         bullet_count_text, True, (255, 255, 255))
     SCREEN.blit(text_surface, (10, 10))
