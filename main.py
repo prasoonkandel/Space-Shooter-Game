@@ -1,4 +1,4 @@
-# run this file to play game
+# run this file to play game [space shooter]
 
 import pygame
 import time
@@ -13,7 +13,7 @@ pygame.mixer.init()
 pygame.font.init()
 bullet_count_font = pygame.font.SysFont("Montserrat", 24)
 
-# Constants
+# Constantsv
 WIDTH, HEIGHT = 540, 600
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Shooter")
