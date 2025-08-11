@@ -1,0 +1,1 @@
+please sownload the whole dist folder becauese it cant run without the assets in assets folde
