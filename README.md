@@ -1,4 +1,4 @@
-### 🚀 Space Shooter Game (Pygame)
+### Space Shooter Game (Pygame)
 An arcade-style space shooter game made using **Pygame**.  
 Dodge enemies, shoot bullets, collect reloads, and survive!
 
